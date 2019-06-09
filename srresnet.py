@@ -174,20 +174,20 @@ class _NetD(nn.Module):
 
         # state size. (512 x 6 x 6)
 
-        out_layer = self.fc1(out_7)
+        out_8 = self.fc1(out_7)
         # out_layer = self.activation_8(out_layer)
 
 
         # state size. (1024)
-        out = self.LeakyReLU(out_layer)
+        out_8 = self.LeakyReLU(out_8)
 
-        out_final = self.fc2(out)
+        out_9 = self.fc2(out_8)
 
-        out = self.sigmoid(out_7)
+        out_9 = self.sigmoid(out_9)
 
         return out_0.view(-1, 1).squeeze(1), out_1.view(-1, 1).squeeze(1),
         out_2.view(-1, 1).squeeze(1),out_3.view(-1, 1).squeeze(1),out_4.view(-1, 1).squeeze(1),out_5.view(-1, 1).squeeze(1),
-        out_6.view(-1, 1).squeeze(1),out_7.view(-1, 1).squeeze(1)
+        out_6.view(-1, 1).squeeze(1),out_7.view(-1, 1).squeeze(1),out_8.view(-1, 1).squeeze(1),out_9.view(-1, 1).squeeze(1)
 
 
 
