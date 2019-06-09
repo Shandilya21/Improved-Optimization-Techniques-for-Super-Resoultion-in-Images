@@ -195,16 +195,16 @@ class _NetD(nn.Module):
 # model = _NetG()
 # input = np.zeros((32,3,))
 
-criterion = nn.MSELoss(size_average=False)
-model_1 = _NetD()
-input = np.ones((32,3,96,96))
-target = np.zeros((32,3,48,48))
-input_layer = torch.tensor(input).float()
-outmost = model_1.forward(input_layer)
-print(outmost)
+# criterion = nn.MSELoss(size_average=False)
+# model_1 = _NetD()
+# input = np.ones((32,3,96,96))
+# target = np.zeros((32,3,48,48))
+# input_layer = torch.tensor(input).float()
+# outmost = model_1.forward(input_layer)
+# print(outmost)
 
-loss = criterion(input, target)
-print(loss)
+# loss = criterion(input, target)
+# print(loss)
 
 
 
