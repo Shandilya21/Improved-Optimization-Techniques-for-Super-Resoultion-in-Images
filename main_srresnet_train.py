@@ -68,8 +68,10 @@ def main():
     #     netContent = _content_model()
 
     print("===> Building model")
-    model = _NetG()
-    criterion = nn.MSELoss(size_average=True)
+    model_G = _NetG()
+    model_D = _NetD()
+    criterion = nn.MSELoss()
+    criterion_D = nn.MSELoss()
 
     print("===> Setting GPU")
     if cuda:
@@ -88,14 +90,14 @@ def main():
         else:
             print("=> no checkpoint found at '{}'".format(opt.resume))
 
-    # optionally copy weights from a checkpoint
-    # if opt.pretrained:
-    #     if os.path.isfile(opt.pretrained):
-    #         print("=> loading model '{}'".format(opt.pretrained))
-    #         weights = torch.load(opt.pretrained)
-    #         model.load_state_dict(weights['model'].state_dict())
-    #     else:
-    #         print("=> no model found at '{}'".format(opt.pretrained))
+    optionally copy weights from a checkpoint
+    if opt.pretrained:
+        if os.path.isfile(opt.pretrained):
+            print("=> loading model '{}'".format(opt.pretrained))
+            weights = torch.load(opt.pretrained)
+            model.load_state_dict(weights['model'].state_dict())
+        else:
+            print("=> no model found at '{}'".format(opt.pretrained))
 
     print("===> Setting Optimizer")
     optimizer = optim.Adam(model.parameters(), lr=opt.lr)
@@ -128,15 +130,15 @@ def train(training_data_loader, optimizer, model, criterion, epoch):
             input = input.cuda()
             target = target.cuda()
 
-        out_neg = model(input)
-        D = _NetD()
-        out_0, out_1, out_2, out_3, out_4,out_5,out_6, out_7 = D(out_neg)
+        out_neg = model_G(input)
+        
+        out_0, out_1, out_2, out_3, out_4,out_5,out_6, out_7, out_8, out_9 = D(out_neg)
 
 
-        target_neg = target.clone()
-        t_0, t_1, t_2, t_3, t_4, t_5, t_6, t_7 = D(target_neg)
+#         target_neg = target.clone()
+        t_0, t_1, t_2, t_3, t_4, t_5, t_6, t_7, t_8, t_9 = model_D(target)
 
-        loss_ = criterion(input,target_neg)
+        loss_ = criterion(out_neg,target_neg)
         loss_0 = criterion(out_0, t_0)
         loss_1 = criterion(out_1, t_1)
         loss_2 = criterion(out_2, t_2)
@@ -145,8 +147,9 @@ def train(training_data_loader, optimizer, model, criterion, epoch):
         loss_5 = criterion(out_5, t_5)
         loss_6 = criterion(out_6, t_6)
         loss_7 = criterion(out_7, t_7)
+        loss_8 = criterion(out_8, t_8)
 
-        loss = loss_ + loss_0 + loss_1 + loss_2 + loss_3 + loss_4 + loss_5 + loss_6 + loss_7
+        loss = loss_ + loss_0 + loss_1 + loss_2 + loss_3 + loss_4 + loss_5 + loss_6 + loss_7+ loss_8
 
 
 
@@ -167,7 +170,8 @@ def train(training_data_loader, optimizer, model, criterion, epoch):
         optimizer.step()
 
         if iteration%100 == 0:
-            print("===> Epoch[{}]({}/{}): Loss: {:.5} Content_loss {:.5}".format(epoch, iteration, len(training_data_loader), loss.data[0]))
+            if opt.vgg_loss:
+                print("===> Epoch[{}]({}/{}): Loss: {:.5} Content_loss {:.5}".format(epoch, iteration, len(training_data_loader), loss.data[0]))
         else:
             print("===> Epoch[{}]({}/{}): Loss: {:.5}".format(epoch, iteration, len(training_data_loader), loss.data[0]))
 
