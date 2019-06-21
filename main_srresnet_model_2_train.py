@@ -124,7 +124,7 @@ def adjust_learning_rate(optimizer, epoch):
     """Sets the learning rate to the initial LR decayed by 10"""
     lr = opt.lr * (0.1 ** (epoch // opt.step))
     return lr 
-c = 1
+c_1 = c_2 = c_3 = c_4 = c_5 = c_6 = c_7 = c_8 = c_9 = 1
 def train(training_data_loader, optimizer, model_G, model_D, criterion, epoch):
 
     lr = adjust_learning_rate(optimizer, epoch-1)
@@ -174,30 +174,29 @@ def train(training_data_loader, optimizer, model_G, model_D, criterion, epoch):
         l7 = loss_7.mean()
         l8 = loss_8.mean()
     #coverage
-    c_1 = 0.9 * (c) + 0.1 * (l_0)
-    c_2 = 0.9 * (c) + 0.1 * (l_1)
-    c_3 = 0.9 * (c) + 0.1 * (l_2)
-    c_4 = 0.9 * (c) + 0.1 * (l_3)
-    c_5 = 0.9 * (c) + 0.1 * (l_4)
-    c_6 = 0.9 * (c) + 0.1 * (l_5)
-    c_7 = 0.9 * (c) + 0.1 * (l_6)
-    c_8 = 0.9 * (c) + 0.1 * (l_7)
-    c_9 = 0.9 * (c) + 0.1 * (l_8)
+
     
-    c+ = 1
         fp = torch.exp()
         sum_fp = fp(l)+fp(l1)+fp(l2)+fp(l3)+fp(l4)+fp(l5)+fp(l6)+fp(l7)+fp(l8)
-        l_0 = fp(l)/sum_fp
-        l_1 = fp(l1)/sum_fp
-        l_2 = fp(l2)/sum_fp
-        l_3 = fp(l3)/sum_fp
-        l_4 = fp(l4)/sum_fp
-        l_5 = fp(l5)/sum_fp
-        l_6 = fp(l6)/sum_fp
-        l_7 = fp(l7)/sum_fp
-        l_8 = fp(l8)/sum_fp
+        soft_l_0 = fp(l)/sum_fp
+        soft_l_1 = fp(l1)/sum_fp
+        soft_l_2 = fp(l2)/sum_fp
+        soft_l_3 = fp(l3)/sum_fp
+        soft_l_4 = fp(l4)/sum_fp
+        soft_l_5 = fp(l5)/sum_fp
+        soft_l_6 = fp(l6)/sum_fp
+        soft_l_7 = fp(l7)/sum_fp
+        soft_l_8 = fp(l8)/sum_fp
 
-
+    c_1 = 0.9 * c_1 + 0.1 * soft_l_0
+    c_2 = 0.9 * c_2 + 0.1 * soft_l_1
+    c_3 = 0.9 * c_3 + 0.1 * soft_l_2
+    c_4 = 0.9 * c_4 + 0.1 * soft_l_3
+    c_5 = 0.9 * c_5 + 0.1 * soft_l_4
+    c_6 = 0.9 * c_6 + 0.1 * soft_l_5
+    c_7 = 0.9 * c_7 + 0.1 * soft_l_6
+    c_8 = 0.9 * c_8 + 0.1 * soft_l_7
+    c_9 = 0.9 * c_9 + 0.1 * soft_l_8
 
         loss_overall = (l* fp(l))/sum_fp \
             + (l1 * fp(l1))/sum_fp \
