@@ -175,18 +175,19 @@ def train(training_data_loader, optimizer, model_G, model_D, criterion, epoch):
         l8 = loss_8.mean()
 
         fp = torch.exp()
+        sum_fp = fp(l)+fp(l1)+fp(l2)+fp(l3)+fp(l4)+fp(l5)+fp(l6)+fp(l7)+fp(l8)
 
 
 
-        loss_overall = (l* fp(l))/(fp(l)+fp(l1)+fp(l2)+fp(l3)+fp(l4)+fp(l5)+fp(l6)+fp(l7)+fp(l8)) \
-            + (l1 * fp(l1))/(fp(l)+fp(l1)+fp(l2)+fp(l3)+fp(l4)+fp(l5)+fp(l6)+fp(l7)+fp(l8)) \
-             + (l2 * fp(l2))/(fp(l)+fp(l1)+fp(l2)+fp(l3)+fp(l4)+fp(l5)+fp(l6)+fp(l7)+fp(l8)) \
-              + (l3 * fp(l3))/(fp(l)+fp(l1)+fp(l2)+fp(l3)+fp(l4)+fp(l5)+fp(l6)+fp(l7)+fp(l8)) \
-               + (l4 * fp(l4))/(fp(l)+fp(l1)+fp(l2)+fp(l3)+fp(l4)+fp(l5)+fp(l6)+fp(l7)+fp(l8)) \
-                + (l5 * fp(f5))/(fp(l)+fp(l1)+fp(l2)+fp(l3)+fp(l4)+fp(l5)+fp(l6)+fp(l7)+fp(l8)) \
-                 + (l6 * fp(l6))/(fp(l)+fp(l1)+fp(l2)+fp(l3)+fp(l4)+fp(l5)+fp(l6)+fp(l7)+fp(l8)) \
-                 + (l7 * fp(l7))/(fp(l)+fp(l1)+fp(l2)+fp(l3)+fp(l4)+fp(l5)+fp(l6)+fp(l7)+fp(l8))  \
-                  + (l8 * fp(l8))/(fp(l)+fp(l1)+fp(l2)+fp(l3)+fp(l4)+fp(l5)+fp(l6)+fp(l7)+fp(l8))  #changed
+        loss_overall = (l* fp(l))/sum_fp \
+            + (l1 * fp(l1))/sum_fp \
+             + (l2 * fp(l2))/sum_fp \
+              + (l3 * fp(l3))/sum_fp \
+               + (l4 * fp(l4))/sum_fp \
+                + (l5 * fp(f5))/sum_fp \
+                 + (l6 * fp(l6))/sum_fp \
+                 + (l7 * fp(l7))/sum_fp  \
+                  + (l8 * fp(l8))/sum_fp  #changed
 
 
 
