@@ -124,7 +124,7 @@ def adjust_learning_rate(optimizer, epoch):
     """Sets the learning rate to the initial LR decayed by 10"""
     lr = opt.lr * (0.1 ** (epoch // opt.step))
     return lr 
-
+c = 1
 def train(training_data_loader, optimizer, model_G, model_D, criterion, epoch):
 
     lr = adjust_learning_rate(optimizer, epoch-1)
@@ -197,6 +197,8 @@ def train(training_data_loader, optimizer, model_G, model_D, criterion, epoch):
                  + (l6 * fp(l6))/sum_fp \
                  + (l7 * fp(l7))/sum_fp  \
                   + (l8 * fp(l8))/sum_fp  #changed
+        
+
 
 
 
@@ -221,7 +223,18 @@ def train(training_data_loader, optimizer, model_G, model_D, criterion, epoch):
                 print("===> Epoch[{}]({}/{}): Loss: {:.5} Content_loss {:.5}".format(epoch, iteration, len(training_data_loader), loss_overall.data[0]))
         else:
             print("===> Epoch[{}]({}/{}): Loss: {:.5}".format(epoch, iteration, len(training_data_loader), loss_overall.data[0]))
-
+     #coverage
+     c_1 = 0.9 * (c) + 0.1 * (l_0)
+     c_2 = 0.9 * (c) + 0.1 * (l_1)
+     c_3 = 0.9 * (c) + 0.1 * (l_2)
+     c_4 = 0.9 * (c) + 0.1 * (l_3)
+     c_5 = 0.9 * (c) + 0.1 * (l_4)
+     c_6 = 0.9 * (c) + 0.1 * (l_5)
+     c_7 = 0.9 * (c) + 0.1 * (l_6)
+     c_8 = 0.9 * (c) + 0.1 * (l_7)
+     c_9 = 0.9 * (c) + 0.1 * (l_8)
+    
+    c+ = 1
 def save_checkpoint(model, epoch):
     model_out_path = "checkpoint/" + "model_epoch_{}.pth".format(epoch)
     state = {"epoch": epoch ,"model": model}
