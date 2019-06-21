@@ -174,8 +174,6 @@ def train(training_data_loader, optimizer, model_G, model_D, criterion, epoch):
         l7 = loss_7.mean()
         l8 = loss_8.mean()
     
-
-    
         fp = torch.exp()
         sum_fp = fp(l)+fp(l1)+fp(l2)+fp(l3)+fp(l4)+fp(l5)+fp(l6)+fp(l7)+fp(l8)
         soft_l_0 = fp(l)/sum_fp
@@ -187,26 +185,27 @@ def train(training_data_loader, optimizer, model_G, model_D, criterion, epoch):
         soft_l_6 = fp(l6)/sum_fp
         soft_l_7 = fp(l7)/sum_fp
         soft_l_8 = fp(l8)/sum_fp
-    #coverage
-    c_1 = 0.9 * c_1 + 0.1 * soft_l_0
-    c_2 = 0.9 * c_2 + 0.1 * soft_l_1
-    c_3 = 0.9 * c_3 + 0.1 * soft_l_2
-    c_4 = 0.9 * c_4 + 0.1 * soft_l_3
-    c_5 = 0.9 * c_5 + 0.1 * soft_l_4
-    c_6 = 0.9 * c_6 + 0.1 * soft_l_5
-    c_7 = 0.9 * c_7 + 0.1 * soft_l_6
-    c_8 = 0.9 * c_8 + 0.1 * soft_l_7
-    c_9 = 0.9 * c_9 + 0.1 * soft_l_8
+        
+        #coverage
+        c_1 = 0.9 * c_1 + 0.1 * soft_l_0
+        c_2 = 0.9 * c_2 + 0.1 * soft_l_1
+        c_3 = 0.9 * c_3 + 0.1 * soft_l_2
+        c_4 = 0.9 * c_4 + 0.1 * soft_l_3
+        c_5 = 0.9 * c_5 + 0.1 * soft_l_4
+        c_6 = 0.9 * c_6 + 0.1 * soft_l_5
+        c_7 = 0.9 * c_7 + 0.1 * soft_l_6
+        c_8 = 0.9 * c_8 + 0.1 * soft_l_7
+        c_9 = 0.9 * c_9 + 0.1 * soft_l_8
 
-        loss_overall = (l* fp(l))/sum_fp \
-            + (l1 * fp(l1))/sum_fp \
-             + (l2 * fp(l2))/sum_fp \
-              + (l3 * fp(l3))/sum_fp \
-               + (l4 * fp(l4))/sum_fp \
-                + (l5 * fp(f5))/sum_fp \
-                 + (l6 * fp(l6))/sum_fp \
-                 + (l7 * fp(l7))/sum_fp  \
-                  + (l8 * fp(l8))/sum_fp  #changed
+        loss_overall = (l* soft_l_0)/c_1 \
+            + (l1 * soft_l_1)/c_2 \
+             + (l2 * soft_l_2)/c_3 \
+              + (l3 * soft_l_3)/c_4 \
+               + (l4 * soft_l_4)/c_5 \
+                + (l5 * soft_l_5)/c_6 \
+                 + (l6 * soft_l_6)/c_7 \
+                 + (l7 * soft_l_7)/c_8  \
+                  + (l8 * soft_l_8)/c_9  #changed
         
 
 
