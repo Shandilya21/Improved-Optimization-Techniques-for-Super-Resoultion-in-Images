@@ -37,7 +37,7 @@ parser.add_argument("--threads", type=int, default=0, help="Number of threads fo
 parser.add_argument("--pretrained", default="", type=str, help="path to pretrained model (default: none)")
 parser.add_argument("--vgg_loss", action="store_true", help="Use content loss?")
 parser.add_argument("--gpus", default="0", type=str, help="gpu ids (default: 0)")
-parser.add_argument("--coverage, default = True, type = bool ")
+parser.add_argument("--coverage", default = True, type = bool)
 
 def main():
 
