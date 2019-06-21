@@ -173,7 +173,7 @@ def train(training_data_loader, optimizer, model_G, model_D, criterion, epoch):
         l6 = loss_6.mean()
         l7 = loss_7.mean()
         l8 = loss_8.mean()
-    #coverage
+    
 
     
         fp = torch.exp()
@@ -187,7 +187,7 @@ def train(training_data_loader, optimizer, model_G, model_D, criterion, epoch):
         soft_l_6 = fp(l6)/sum_fp
         soft_l_7 = fp(l7)/sum_fp
         soft_l_8 = fp(l8)/sum_fp
-
+    #coverage
     c_1 = 0.9 * c_1 + 0.1 * soft_l_0
     c_2 = 0.9 * c_2 + 0.1 * soft_l_1
     c_3 = 0.9 * c_3 + 0.1 * soft_l_2
