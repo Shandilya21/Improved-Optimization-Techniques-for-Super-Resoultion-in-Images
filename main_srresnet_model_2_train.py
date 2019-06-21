@@ -37,6 +37,7 @@ parser.add_argument("--threads", type=int, default=0, help="Number of threads fo
 parser.add_argument("--pretrained", default="", type=str, help="path to pretrained model (default: none)")
 parser.add_argument("--vgg_loss", action="store_true", help="Use content loss?")
 parser.add_argument("--gpus", default="0", type=str, help="gpu ids (default: 0)")
+parser.add_argument("--coverage, default = "True", type = bool ")
 
 def main():
 
@@ -187,15 +188,16 @@ def train(training_data_loader, optimizer, model_G, model_D, criterion, epoch):
         soft_l_8 = fp(l8)/sum_fp
         
         #coverage
-        c_1 = 0.9 * c_1 + 0.1 * soft_l_0
-        c_2 = 0.9 * c_2 + 0.1 * soft_l_1
-        c_3 = 0.9 * c_3 + 0.1 * soft_l_2
-        c_4 = 0.9 * c_4 + 0.1 * soft_l_3
-        c_5 = 0.9 * c_5 + 0.1 * soft_l_4
-        c_6 = 0.9 * c_6 + 0.1 * soft_l_5
-        c_7 = 0.9 * c_7 + 0.1 * soft_l_6
-        c_8 = 0.9 * c_8 + 0.1 * soft_l_7
-        c_9 = 0.9 * c_9 + 0.1 * soft_l_8
+        if coverage:
+            c_1 = 0.9 * c_1 + 0.1 * soft_l_0
+            c_2 = 0.9 * c_2 + 0.1 * soft_l_1
+            c_3 = 0.9 * c_3 + 0.1 * soft_l_2
+            c_4 = 0.9 * c_4 + 0.1 * soft_l_3
+            c_5 = 0.9 * c_5 + 0.1 * soft_l_4
+            c_6 = 0.9 * c_6 + 0.1 * soft_l_5
+            c_7 = 0.9 * c_7 + 0.1 * soft_l_6
+            c_8 = 0.9 * c_8 + 0.1 * soft_l_7
+            c_9 = 0.9 * c_9 + 0.1 * soft_l_8
 
         loss_overall = (l* soft_l_0)/c_1 \
             + (l1 * soft_l_1)/c_2 \
