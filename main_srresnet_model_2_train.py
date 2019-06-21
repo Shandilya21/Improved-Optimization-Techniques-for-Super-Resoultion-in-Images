@@ -176,6 +176,15 @@ def train(training_data_loader, optimizer, model_G, model_D, criterion, epoch):
 
         fp = torch.exp()
         sum_fp = fp(l)+fp(l1)+fp(l2)+fp(l3)+fp(l4)+fp(l5)+fp(l6)+fp(l7)+fp(l8)
+        l_0 = fp(l)/sum_fp
+        l_1 = fp(l1)/sum_fp
+        l_2 = fp(l2)/sum_fp
+        l_3 = fp(l3)/sum_fp
+        l_4 = fp(l4)/sum_fp
+        l_5 = fp(l5)/sum_fp
+        l_6 = fp(l6)/sum_fp
+        l_7 = fp(l7)/sum_fp
+        l_8 = fp(l8)/sum_fp
 
 
 
