@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
 import math
-import numpy as np 
 
 class _Residual_Block(nn.Module):
     def __init__(self):
@@ -70,55 +69,47 @@ class _NetD(nn.Module):
     def __init__(self):
         super(_NetD, self).__init__()
 
-        #self.features = nn.Sequential(
+        self.features = nn.Sequential(
         
-        # input is (3) x 96 x 96
-        #Block_1
-        self.conv_1 = nn.Conv2d(in_channels=3, out_channels=64, kernel_size=3, stride=1, padding=1, bias=False)
-        self.activation_1 = nn.LeakyReLU(0.2, inplace=True)
+            # input is (3) x 96 x 96
+            nn.Conv2d(in_channels=3, out_channels=64, kernel_size=3, stride=1, padding=1, bias=False),
+            nn.LeakyReLU(0.2, inplace=True),
 
-     	# state size. (64) x 96 x 96
-        #Block_2
-        self.conv_2 = nn.Conv2d(in_channels=64, out_channels=64, kernel_size=4, stride=2, padding=1, bias=False)          
-        self.bn_1 = nn.BatchNorm2d(64)
-        self.activation_2 = nn.LeakyReLU(0.2, inplace=True)
+            # state size. (64) x 96 x 96
+            nn.Conv2d(in_channels=64, out_channels=64, kernel_size=4, stride=2, padding=1, bias=False),            
+            nn.BatchNorm2d(64),
+            nn.LeakyReLU(0.2, inplace=True),
 
-       	# state size. (64) x 96 x 96
-        #Block_3
-        self.conv_3 = nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, stride=1, padding=1, bias=False)            
-        self.bn_2 = nn.BatchNorm2d(128)
-        self.activation_3 = nn.LeakyReLU(0.2, inplace=True)
+            # state size. (64) x 96 x 96
+            nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, stride=1, padding=1, bias=False),            
+            nn.BatchNorm2d(128),
+            nn.LeakyReLU(0.2, inplace=True),
             
-        # state size. (64) x 48 x 48
-        #Block_4
-        self.conv_4 = nn.Conv2d(in_channels=128, out_channels=128, kernel_size=4, stride=2, padding=1, bias=False)
-        self.bn_3 = nn.BatchNorm2d(128)
-        self.activation_4 = nn.LeakyReLU(0.2, inplace=True)
+            # state size. (64) x 48 x 48
+            nn.Conv2d(in_channels=128, out_channels=128, kernel_size=4, stride=2, padding=1, bias=False),
+            nn.BatchNorm2d(128),
+            nn.LeakyReLU(0.2, inplace=True),
 
-        # state size. (128) x 48 x 48
-        #Block_5
-        self.conv_5 = nn.Conv2d(in_channels=128, out_channels=256, kernel_size=3, stride=1, padding=1, bias=False)
-        self.bn_4 = nn.BatchNorm2d(256)
-        self.activation_5 = nn.LeakyReLU(0.2, inplace=True)
+            # state size. (128) x 48 x 48
+            nn.Conv2d(in_channels=128, out_channels=256, kernel_size=3, stride=1, padding=1, bias=False),
+            nn.BatchNorm2d(256),
+            nn.LeakyReLU(0.2, inplace=True),
 
-        # state size. (256) x 24 x 24
-        #Block_6
-        self.conv_6 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=4, stride=2, padding=1, bias=False)
-        self.bn_5 = nn.BatchNorm2d(256)
-        self.activation_6 = nn.LeakyReLU(0.2, inplace=True)
+            # state size. (256) x 24 x 24
+            nn.Conv2d(in_channels=256, out_channels=256, kernel_size=4, stride=2, padding=1, bias=False),
+            nn.BatchNorm2d(256),
+            nn.LeakyReLU(0.2, inplace=True),
 
-        # state size. (256) x 12 x 12
-        #Block_7
-        self.conv_7 = nn.Conv2d(in_channels=256, out_channels=512, kernel_size=3, stride=1, padding=1, bias=False)
-        self.bn_6 = nn.BatchNorm2d(512)
-        self.activation_7 = nn.LeakyReLU(0.2, inplace=True)
+            # state size. (256) x 12 x 12
+            nn.Conv2d(in_channels=256, out_channels=512, kernel_size=3, stride=1, padding=1, bias=False),            
+            nn.BatchNorm2d(512),
+            nn.LeakyReLU(0.2, inplace=True),
 
-        # state size. (512) x 12 x 12
-        #Block_8
-        self.conv_8 = nn.Conv2d(in_channels=512, out_channels=512, kernel_size=4, stride=2, padding=1, bias=False)           
-        self.bn_7 = nn.BatchNorm2d(512)
-        self.activation_8 = nn.LeakyReLU(0.2, inplace=True)
-            
+            # state size. (512) x 12 x 12
+            nn.Conv2d(in_channels=512, out_channels=512, kernel_size=4, stride=2, padding=1, bias=False),            
+            nn.BatchNorm2d(512),
+            nn.LeakyReLU(0.2, inplace=True),
+        )
 
         self.LeakyReLU = nn.LeakyReLU(0.2, inplace=True)
         self.fc1 = nn.Linear(512 * 6 * 6, 1024)
@@ -134,78 +125,17 @@ class _NetD(nn.Module):
 
     def forward(self, input):
 
-    	# Define all the layers along with parameters accordingly, refer initilization function
-
-        out_0 = self.conv_1(input)
-        out_0 = self.activation_1(out_0)
-        out_1 = self.conv_2(out_0)
-        out_1 = self.bn_1(out_1)
-        out_1 = self.activation_2(out_1)
-        out_2 = self.conv_3(out_1)
-        out_2 = self.bn_2(out_2)
-        out_2 = self.activation_3(out_2)
-        out_3 = self.conv_4(out_2)
-        out_3 = self.bn_3(out_3)
-        out_3 = self.activation_4(out_3)
-        out_4 = self.conv_5(out_3)
-        out_4 = self.bn_4(out_4)
-        out_4 = self.activation_5(out_4)
-        out_5 = self.conv_6(out_4)
-        out_5 = self.bn_5(out_5)
-        out_5 = self.activation_6(out_5)
-        out_6 = self.conv_7(out_5)
-        out_6 = self.bn_6(out_6)
-        out_6 = self.activation_7(out_6)
-        out_7 = self.conv_8(out_6)
-        out_7 = self.bn_7(out_7)
-        out_7 = self.activation_8(out_7)
-
+        out = self.features(input)
 
         # state size. (512) x 6 x 6
-        out_0 = out_0.view(out_0.size(0), -1)
-        out_1 = out_1.view(out_1.size(0), -1)
-        out_2 = out_2.view(out_2.size(0), -1)
-        out_3 = out_3.view(out_3.size(0), -1)
-        out_4 = out_4.view(out_4.size(0), -1)
-        out_5 = out_5.view(out_5.size(0), -1)
-        out_6 = out_6.view(out_6.size(0), -1)
-        out_7 = out_7.view(out_7.size(0), -1)
-
+        out = out.view(out.size(0), -1)
 
         # state size. (512 x 6 x 6)
-
-        out_8 = self.fc1(out_7)
-        # out_layer = self.activation_8(out_layer)
-
+        out = self.fc1(out)
 
         # state size. (1024)
-        out_8 = self.LeakyReLU(out_8)
+        out = self.LeakyReLU(out)
 
-        out_9 = self.fc2(out_8)
-
-        out_9 = self.sigmoid(out_9)
-
-        return out_0.view(-1, 1).squeeze(1), out_1.view(-1, 1).squeeze(1),
-        out_2.view(-1, 1).squeeze(1),out_3.view(-1, 1).squeeze(1),out_4.view(-1, 1).squeeze(1),out_5.view(-1, 1).squeeze(1),
-        out_6.view(-1, 1).squeeze(1),out_7.view(-1, 1).squeeze(1),out_8.view(-1, 1).squeeze(1),out_9.view(-1, 1).squeeze(1)
-
-
-
-
-# model = _NetG()
-# input = np.zeros((32,3,))
-
-# criterion = nn.MSELoss(size_average=False)
-# model_1 = _NetD()
-# input = np.ones((32,3,96,96))
-# target = np.zeros((32,3,48,48))
-# input_layer = torch.tensor(input).float()
-# outmost = model_1.forward(input_layer)
-# print(outmost)
-
-# loss = criterion(input, target)
-# print(loss)
-
-
-
-
+        out = self.fc2(out)
+        out = self.sigmoid(out)
+        return out.view(-1, 1).squeeze(1)
